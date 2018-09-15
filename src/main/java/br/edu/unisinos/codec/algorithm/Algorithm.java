@@ -2,18 +2,18 @@ package br.edu.unisinos.codec.algorithm;
 
 public abstract class Algorithm {
 	
-	protected Object input;
-	protected Object output;
+	protected byte[] input;
+	protected byte[] output;
 	
 	abstract public void compress();
 	
 	abstract public void decompress();
 	
-	public void setInput(Object input) {
+	public void setInput(byte[] input) {
 		this.input = input;
 	}
 	
-	public Object getOutput() {
+	public byte[] getOutput() {
 		return this.output;
 	}
 

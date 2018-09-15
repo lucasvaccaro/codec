@@ -6,8 +6,8 @@ import br.edu.unisinos.codec.algorithm.Algorithm;
 
 public abstract class Pipeline {
 	
-	protected Object input;
-	protected Object output;
+	protected byte[] input;
+	protected byte[] output;
 	protected LinkedList<Algorithm> list;
 	
 	public Pipeline() {
@@ -15,7 +15,7 @@ public abstract class Pipeline {
 	}
 	
 	public void compress() {
-		Object tempOutput = this.input;
+		byte[] tempOutput = this.input;
 		for (Algorithm alg : this.list) {
 			alg.setInput(tempOutput);
 			alg.compress();
@@ -25,7 +25,7 @@ public abstract class Pipeline {
 	}
 
 	public void decompress() {
-		Object tempOutput = this.input;
+		byte[] tempOutput = this.input;
 		for (Algorithm alg : this.list) {
 			alg.setInput(tempOutput);
 			alg.decompress();
@@ -34,7 +34,7 @@ public abstract class Pipeline {
 		this.output = tempOutput;
 	}
 	
-	public void setInput(Object input) {
+	public void setInput(byte[] input) {
 		this.input = input;
 	}
 	
