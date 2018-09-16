@@ -54,13 +54,8 @@ public class LZ77Algorithm extends Algorithm {
 		int inputLength = this.input.length;
 		for (int i = 0; i < inputLength;) {
 			int distance = this.input[i++] & 0xFF;
-			int length = 0;
 			if (distance > 0) {
-				length = this.input[i++] & 0xFF;
-			}
-			byte character = this.input[i++];
-			
-			if (distance > 0) {
+				int length = this.input[i++] & 0xFF;
 				int start = bytes.size() - distance;
 				int end = start + length;
 				for (int j = start; j < end; j++) {
@@ -68,9 +63,7 @@ public class LZ77Algorithm extends Algorithm {
 				}
 			}
 			
-			if (character > 0) {
-				bytes.add(character);
-			}
+			bytes.add(this.input[i++]);
 		}
 		
 		// Format output
