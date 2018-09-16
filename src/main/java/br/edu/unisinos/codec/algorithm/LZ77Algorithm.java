@@ -5,8 +5,8 @@ import java.util.Arrays;
 
 public class LZ77Algorithm extends Algorithm {
 	
-	private static int LOOK_AHEAD_BUFFER_SIZE = 10;
-	private static int WINDOW_SIZE = 127;
+	private static int LOOK_AHEAD_BUFFER_SIZE = 31;
+	private static int WINDOW_SIZE = 255;
 
 	public LZ77Algorithm() {
 		super();
@@ -21,12 +21,11 @@ public class LZ77Algorithm extends Algorithm {
 			Match match = findMatchInSlidingWindow(this.input, i);
 			
 			if (match == null) {
-				// No match > add 0 distance and length, and itself
-				bytes.add((byte)0);
+				// No match: add 0 distance and length, and itself
 				bytes.add((byte)0);
 				bytes.add(this.input[i]);
 			} else {
-				// Match! > add distance, length and next character
+				// Match!: add distance, length and next character
 				bytes.add((byte)match.getDistance());
 				bytes.add((byte)match.getLength());
 				i += match.getLength();
@@ -54,8 +53,11 @@ public class LZ77Algorithm extends Algorithm {
 		
 		int inputLength = this.input.length;
 		for (int i = 0; i < inputLength;) {
-			int distance = this.input[i++];
-			int length = this.input[i++];
+			int distance = this.input[i++] & 0xFF;
+			int length = 0;
+			if (distance > 0) {
+				length = this.input[i++] & 0xFF;
+			}
 			byte character = this.input[i++];
 			
 			if (distance > 0) {

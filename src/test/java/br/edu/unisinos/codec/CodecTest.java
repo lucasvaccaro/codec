@@ -1,53 +1,78 @@
 package br.edu.unisinos.codec;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+
 import org.junit.Test;
 
-import br.edu.unisinos.codec.algorithm.Algorithm;
-import br.edu.unisinos.codec.algorithm.LZ77Algorithm;
+import br.edu.unisinos.codec.pipeline.Pipeline;
+import br.edu.unisinos.codec.pipeline.TextPipeline;
 
 public class CodecTest {
 	
+	private String fileNameSrc = "C:\\Users\\Lucas\\Downloads\\alice29.txt";
+	private String fileNameDestComp = "C:\\Users\\Lucas\\Downloads\\alice29.glr";
+	private String fileNameDestDecomp = "C:\\Users\\Lucas\\Downloads\\alice29.glr.txt";
+	
 	@Test
-	public void lz77Test() {
-		String s = new String("`Found WHAT?' said the Duck.`Found IT,' the Mouse replied rather crossly: `of course you");
-		Algorithm lz = new LZ77Algorithm();
-		lz.setInput(s.getBytes());
-		lz.compress();
+	public void pipelineTest() {
+		String strInput = new String("`Found WHAT?' said the Duck.`Found IT,' the Mouse replied rather crossly: `of course you");
 		
-		byte[] output = lz.getOutput();
-		int outputLength = output.length;
-		for (int i = 0; i < outputLength;) {
-			int distance = output[i++];
-			int length = output[i++];
-			byte character = output[i++];
-			System.out.println(distance + "," + length + "," + character);
+		Pipeline pipe = new TextPipeline();
+		pipe.setInput(strInput.getBytes());
+		pipe.compress();
+		
+		byte[] output = pipe.getOutput();
+		for (int i = 0; i < output.length; i++) {
+			System.out.print(output[i] + " ");
 		}
-		
-		Algorithm lz2 = new LZ77Algorithm();
-		lz2.setInput(output);
-		lz2.decompress();
-		
-		byte[] output2 = lz2.getOutput();
-		System.out.println(new String(output2).toString());
 	}
 	
 	@Test
-	public void compressText() {
-		
-	}
-	
-	@Test
-	public void decompressText() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	@Test
-	public void compressBinary() {
-		// TODO Auto-generated constructor stub
-	}
+	public void pipelineCompressFileTest() throws IOException {
+	    File file = new File(this.fileNameSrc);
 
+	    byte [] fileBytes = Files.readAllBytes(file.toPath());
+		
+		Pipeline pipe = new TextPipeline();
+		pipe.setInput(fileBytes);
+		pipe.compress();
+		
+		byte[] output = pipe.getOutput();
+		
+		FileOutputStream stream = null;
+		try {
+			stream = new FileOutputStream(this.fileNameDestComp);
+		    stream.write(output);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+		    stream.close();
+		}
+	}
+	
 	@Test
-	public void decompressBinary() {
-		// TODO Auto-generated constructor stub
+	public void pipelineDecompressFileTest() throws IOException {
+	    File file = new File(this.fileNameDestComp);
+
+	    byte [] fileBytes = Files.readAllBytes(file.toPath());
+		
+		Pipeline pipe = new TextPipeline();
+		pipe.setInput(fileBytes);
+		pipe.decompress();
+	    
+		byte[] output = pipe.getOutput();
+		
+		FileOutputStream stream = null;
+		try {
+			stream = new FileOutputStream(this.fileNameDestDecomp);
+		    stream.write(output);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+		    stream.close();
+		}
 	}
 }

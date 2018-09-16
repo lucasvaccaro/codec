@@ -38,7 +38,7 @@ public abstract class Pipeline {
 		this.input = input;
 	}
 	
-	public Object getOutput() {
+	public byte[] getOutput() {
 		return this.output;
 	}
 
