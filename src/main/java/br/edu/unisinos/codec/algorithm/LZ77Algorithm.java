@@ -31,8 +31,6 @@ public class LZ77Algorithm extends Algorithm {
 				i += match.getLength();
 				if (i < length) {
 					bytes.add(this.input[i]);
-				} else {
-					bytes.add((byte)0);
 				}
 			}
 			
@@ -63,7 +61,9 @@ public class LZ77Algorithm extends Algorithm {
 				}
 			}
 			
-			bytes.add(this.input[i++]);
+			if (i < inputLength) {
+				bytes.add(this.input[i++]);
+			}
 		}
 		
 		// Format output

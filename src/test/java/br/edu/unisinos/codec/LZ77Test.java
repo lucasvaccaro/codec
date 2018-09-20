@@ -12,9 +12,9 @@ import br.edu.unisinos.codec.algorithm.LZ77Algorithm;
 
 public class LZ77Test {
 	
-	private String fileNameSrc = "C:\\Users\\Lucas\\Downloads\\alice29.txt";
-	private String fileNameDestComp = "C:\\Users\\Lucas\\Downloads\\alice29.glr";
-	private String fileNameDestDecomp = "C:\\Users\\Lucas\\Downloads\\alice29.glr.txt";
+	private String fileNameSrc = "C:\\Users\\Lucas\\Downloads\\sum";
+	private String fileNameDestComp = "C:\\Users\\Lucas\\Downloads\\sum.glr";
+	private String fileNameDestDecomp = "C:\\Users\\Lucas\\Downloads\\sum2";
 
 	@Test
 	public void testLZ77() {
@@ -33,10 +33,12 @@ public class LZ77Test {
 			if (distance > 0) {
 				length = output[i++];
 			}
-			byte[] characterArr = {output[i]};
-			byte character = output[i];
-			System.out.println(distance + "," + length + "," + character + "," + new String(characterArr).toString());
-			i++;
+			if (i < outputLength) {
+				byte[] characterArr = {output[i]};
+				byte character = output[i];
+				System.out.println(distance + "," + length + "," + character + "," + new String(characterArr).toString());
+				i++;
+			}
 		}
 		
 		Algorithm lz2 = new LZ77Algorithm();
@@ -50,7 +52,7 @@ public class LZ77Test {
 		assert strInput.equals(strOutput2);
 	}
 	
-	@Test
+	//@Test
 	public void testCompressFile() throws IOException {
 		
 	    File file = new File(this.fileNameSrc);
@@ -86,7 +88,7 @@ public class LZ77Test {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void testDecompressFile() throws IOException {
 		
 	    File file = new File(this.fileNameDestComp);
