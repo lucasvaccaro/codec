@@ -1,5 +1,6 @@
 package br.edu.unisinos.codec.pipeline;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import br.edu.unisinos.codec.algorithm.Algorithm;
@@ -26,7 +27,9 @@ public abstract class Pipeline {
 
 	public void decompress() {
 		byte[] tempOutput = this.input;
-		for (Algorithm alg : this.list) {
+		Iterator<Algorithm> it = this.list.descendingIterator();
+		while (it.hasNext()) {
+			Algorithm alg = it.next();
 			alg.setInput(tempOutput);
 			alg.decompress();
 			tempOutput = alg.getOutput();
