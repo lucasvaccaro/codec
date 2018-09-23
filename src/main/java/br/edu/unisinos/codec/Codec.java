@@ -1,45 +1,33 @@
 package br.edu.unisinos.codec;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import br.edu.unisinos.codec.stream.CodecStream;
-import br.edu.unisinos.codec.stream.BinaryCodecStream;
-import br.edu.unisinos.codec.stream.TextCodecStream;
+import br.edu.unisinos.codec.pipeline.Pipeline1;
 
 public class Codec {
 	private static final Logger LOGGER = Logger.getLogger(Codec.class.getName());
 	
 	public static final String EXTENSION = "glr";
-	
-	protected File inputFile;
-	protected File outputFile;
-	protected String mimeType;
 	protected CodecStream codecStream;
 
-	public Codec(String filePath) {
-		this.inputFile = new File(filePath);
-		
-		if (!this.inputFile.canRead()) {
-			LOGGER.log(Level.SEVERE, "Arquivo n„o existe ou n„o pode ser lido");
+	public Codec(String inputFilePath, String outputFilePath) {
+		File inputFile = new File(inputFilePath);
+		if (!inputFile.canRead()) {
+			LOGGER.log(Level.SEVERE, "Arquivo n√£o existe ou n√£o pode ser lido");
 			return;
 		}
 		
-		try {
-			this.mimeType = Files.probeContentType(this.inputFile.toPath());
-		} catch (IOException e) {
-			this.mimeType = null;
-		}
-		if (this.mimeType == null) {
-			LOGGER.log(Level.INFO, "Mime-type definido como null");
+		if (outputFilePath == null || outputFilePath.isEmpty()) {
+			LOGGER.log(Level.SEVERE, "Arquivo de destino inv√°lido");
+			return;
 		}
 		
-		this.outputFile = new File(filePath + "." + Codec.EXTENSION);
-		
-		this.defineCodecStreamType();
+		File outputFile = new File(outputFilePath);
+
+		this.codecStream = new CodecStream(inputFile, outputFile, new Pipeline1());
 	}
 	
 	public void compress() {
@@ -48,16 +36,6 @@ public class Codec {
 	
 	public void decompress() {
 		this.codecStream.decompress();
-	}
-	
-	private void defineCodecStreamType() {
-		switch (this.mimeType) {
-			case "text/plain":
-				this.codecStream = new TextCodecStream(this.inputFile, this.outputFile);
-				return;
-			default:
-				this.codecStream = new BinaryCodecStream(this.inputFile, this.outputFile);
-		}
 	}
 
 }
