@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.edu.unisinos.codec.algorithm;
 
-/**
- *
- * @author I852885
- */
 public class GolombAlgorithm extends Algorithm {
     
     public int[] positiveDecimals;
@@ -17,6 +8,18 @@ public class GolombAlgorithm extends Algorithm {
         super();
         positiveDecimals = new int[this.input.length];
     }
+    
+    @Override
+	public void compress() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void decompress() {
+		// TODO Auto-generated method stub
+		
+	}
     
     private void getPositiveDecimals(){
         for(int i = 0; i < this.input.length; i++){
