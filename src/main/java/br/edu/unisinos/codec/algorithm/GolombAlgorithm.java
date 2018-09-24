@@ -1,17 +1,45 @@
 package br.edu.unisinos.codec.algorithm;
+import java.math.BigInteger;
+import java.util.ArrayList;
 
 public class GolombAlgorithm extends Algorithm {
     
     public int[] positiveDecimals;
-    
+    private final int divisor;
+     
     public GolombAlgorithm(){
         super();
         positiveDecimals = new int[this.input.length];
+        this.divisor = 4;
+    }
+
+    public int getDivisor() {
+            return divisor;
     }
     
     @Override
+    
 	public void compress() {
-		// TODO Auto-generated method stub
+	
+            ArrayList<Byte> bytes = new ArrayList<Byte>();
+            
+            for(int i=0; i<positiveDecimals.length; i++){
+            
+                int q = positiveDecimals[i] / divisor;
+		int r = positiveDecimals[i] - q * divisor;
+		
+                bytes.add((byte)q);
+                bytes.add((byte)r);
+                
+		// Format output
+		int bytesSize = bytes.size();
+		this.output = new byte[bytesSize];
+		for (int j = 0; j < bytesSize; j++) {
+		    this.output[j] = bytes.get(j).byteValue();
+		}
+            
+            }
+            
 		
 	}
 
