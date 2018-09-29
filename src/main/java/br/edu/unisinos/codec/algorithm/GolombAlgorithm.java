@@ -1,3 +1,12 @@
+
+
+
+
+//NÃO UTILIZADO
+
+
+
+
 package br.edu.unisinos.codec.algorithm;
 import java.util.*;
 
