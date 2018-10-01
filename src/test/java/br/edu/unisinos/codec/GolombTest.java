@@ -10,9 +10,9 @@ public class GolombTest extends AlgorithmTest {
 		this.alg = new GolombAlgorithm();
 	}
 	
-	@Test
+	//@Test
 	public void testCompressBytes() {
-		this.byteInput = new byte[] {32, 72, 87, 100, 100, 110, 117};
+		this.byteInput = new byte[] {32, 72, 87, 100, 0, 100, 110, 117};
 		super.testCompressBytes();
 	}
 	
@@ -21,7 +21,7 @@ public class GolombTest extends AlgorithmTest {
 		super.testCompressFile();
 	}
 	
-	//@Test
+	@Test
 	public void testDecompressFile() throws IOException {
 		super.testDecompressFile();
 	}

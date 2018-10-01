@@ -6,7 +6,7 @@ import java.util.Arrays;
 public class LZ77Algorithm extends Algorithm {
 	
 	private static int LOOK_AHEAD_BUFFER_SIZE = 31;
-	private static int WINDOW_SIZE = 255;
+	private static int WINDOW_SIZE = 127;
 
 	public LZ77Algorithm() {
 		super();
@@ -52,7 +52,7 @@ public class LZ77Algorithm extends Algorithm {
 		int inputLength = this.input.length;
 		for (int i = 0; i < inputLength;) {
 			int distance = this.input[i++] & 0xFF;
-			if (distance > 0) {
+			if (distance > 0 && i < inputLength) {
 				int length = this.input[i++] & 0xFF;
 				int start = bytes.size() - distance;
 				int end = start + length;

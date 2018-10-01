@@ -1,12 +1,9 @@
 package br.edu.unisinos.codec.stream;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Arrays;
 
 import br.edu.unisinos.codec.pipeline.Pipeline;
 
