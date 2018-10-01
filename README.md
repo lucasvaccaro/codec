@@ -1,6 +1,6 @@
 # Codec
 
-Compressor de arquivos em Java que utiliza os algoritmos LZ77, Delta e Golomb em sequência (extensível para mais algoritmos e pipelines).
+Compressor de arquivos em Java que utiliza os algoritmos LZ77, ~Delta~ e Golomb (parcial) em sequência (extensível para mais algoritmos e pipelines).
 
 Um jar é gerado ao realizar build com o maven.
 
